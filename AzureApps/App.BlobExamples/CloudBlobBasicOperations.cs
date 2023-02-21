@@ -1,6 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using System.ComponentModel;
 
 namespace App.BlobExamples
 {
@@ -164,5 +165,40 @@ namespace App.BlobExamples
             Console.WriteLine($"Blob is deleted {isDeleted.Value}");
         }
 
+        public async Task UploadandSetPropertiesOfBlob()
+        {
+            ContainerName =  "sampledata";
+            var localFilePath = Path.Combine("blobDownloads", "samplepic.jpg");
+            var blobClient = new BlobClient(_Connectionstring, ContainerName, $"{Guid.NewGuid()}.jpg");
+
+            await blobClient.UploadAsync(localFilePath);
+
+            //setting headers
+            var blobheaders = (await blobClient.GetPropertiesAsync())?.Value;
+           
+            var newHeaders = new BlobHttpHeaders
+            {
+                ContentType = "image/jpeg",
+                ContentLanguage = "en-us",
+                //copy the default settings of the blob
+                CacheControl = blobheaders.CacheControl,
+                ContentDisposition = blobheaders.ContentDisposition,
+                ContentEncoding = blobheaders.ContentEncoding,
+                ContentHash = blobheaders.ContentHash,
+            };
+
+            await blobClient.SetHttpHeadersAsync(newHeaders);
+
+            //set  metadata
+
+            var bolmetainfo = new Dictionary<string, string>()
+           {
+               {"cetgory" , "SampleTest" },
+               {"image_about" , "samplecode" }
+           };
+
+           await  blobClient.SetMetadataAsync(bolmetainfo);
+          
+        }
     }
 }

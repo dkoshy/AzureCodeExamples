@@ -15,3 +15,4 @@ var storageExample = new CloudBlobBasicOperations();
 //await storageExample.UploadBlobAsync();
 //await storageExample.uploadBlobWithStream();
 //await storageExample.DeleteBlobAsync();
+//await storageExample.UploadandSetPropertiesOfBlob();
