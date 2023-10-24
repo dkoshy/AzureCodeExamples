@@ -14,7 +14,7 @@ namespace App.BlobExamples
 
         public CloudBlobBasicOperations()
         {
-            _Connectionstring = @"";
+            _Connectionstring = @"DefaultEndpointsProtocol=https;AccountName=azstoragedk104;AccountKey=HKD7M9gEdDxVn3LaR/J6jvSGN7nDpam3/+JywJ1KHMkPudVYMRZombvROe/lLx0Ngq2GlLJjZlzm+AStW5/sDg==;EndpointSuffix=core.windows.net";
             _client = new BlobServiceClient(_Connectionstring);
         }
 
